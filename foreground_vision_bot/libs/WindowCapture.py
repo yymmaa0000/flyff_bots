@@ -1,3 +1,4 @@
+from PIL import ImageGrab
 import cv2 as cv
 import numpy as np
 import win32con
@@ -38,25 +39,15 @@ class WindowCapture:
                 The second array is the image in grayscale format, 1 channel.
         """
 
-        wDC = win32gui.GetWindowDC(self.hwnd)
-        dcObj = win32ui.CreateDCFromHandle(wDC)
-        cDC = dcObj.CreateCompatibleDC()
-        dataBitMap = win32ui.CreateBitmap()
-        dataBitMap.CreateCompatibleBitmap(dcObj, self.w, self.h)
-        cDC.SelectObject(dataBitMap)
-        cDC.BitBlt((0, 0), (self.w, self.h), dcObj, (self.crop_l, self.crop_t), win32con.SRCCOPY)
-        signedIntsArray = dataBitMap.GetBitmapBits(True)
-        img = np.fromstring(signedIntsArray, dtype="uint8")
-        img.shape = (self.h, self.w, 4)
-        dcObj.DeleteDC()
-        cDC.DeleteDC()
-        win32gui.ReleaseDC(self.hwnd, wDC)
-        win32gui.DeleteObject(dataBitMap.GetHandle())
-
-        # drop the alpha channel, or cv.matchTemplate() will throw an error like:
-        #   error: (-215:Assertion failed) (depth == CV_8U || depth == CV_32F) && type == _templ.type()
-        #   && _img.dims() <= 2 in function 'cv::matchTemplate'
-        img = img[..., :3]
+        #image = win32gui.ImageGrab(self.hwnd)
+        bbox = win32gui.GetWindowRect(self.hwnd)
+        image = ImageGrab.grab(bbox)
+        #image.save("D:\screenshot.png")
+        
+        pil_image = image.convert('RGB') 
+        open_cv_image = np.array(pil_image) 
+        # Convert RGB to BGR 
+        img = open_cv_image[:, :, ::-1].copy()
 
         # make image C_CONTIGUOUS to avoid errors that look like:
         #   File ... in draw_rectangles
@@ -66,17 +57,16 @@ class WindowCapture:
         img = np.ascontiguousarray(img)
 
         # DEBUGGING: Show the image
-        # cv.imshow("screenshot", img)
-        # cv.waitKey(1)
+        cv.imshow("screenshot", img)
+        cv.waitKey(1)
 
         # DEBUGGING: Save the screenshot to disk
-        # cv.imwrite("screenshot.png", img)
+        cv.imwrite("screenshot.png", img)
 
         # Convert image to gray
         img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
         return img, img_gray
-
     def get_screen_pos(self, pos):
         """
         Translate a pixel position on a screenshot image to a pixel position on the screen.
