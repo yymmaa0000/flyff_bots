@@ -57,11 +57,11 @@ class WindowCapture:
         img = np.ascontiguousarray(img)
 
         # DEBUGGING: Show the image
-        cv.imshow("screenshot", img)
-        cv.waitKey(1)
+        #cv.imshow("screenshot", img)
+        #cv.waitKey(1)
 
         # DEBUGGING: Save the screenshot to disk
-        cv.imwrite("screenshot.png", img)
+        #cv.imwrite("screenshot.png", img)
 
         # Convert image to gray
         img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
