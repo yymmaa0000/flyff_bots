@@ -1,6 +1,7 @@
 import collections
 from threading import Thread
 from time import sleep, time
+from random import randint, uniform
 
 import pyttsx3
 from assets.Assets import GeneralAssets, MobInfo
@@ -9,7 +10,7 @@ from libs.human_mouse.HumanMouse import HumanMouse
 from libs.HumanKeyboard import VKEY, HumanKeyboard
 from libs.WindowCapture import WindowCapture
 from utils.decorators import throttle
-from utils.helpers import get_point_near_center, start_countdown
+from utils.helpers import get_point_nearest_center, start_countdown
 from utils.SyncedTimer import SyncedTimer
 
 
@@ -158,7 +159,7 @@ class Bot:
             if not len(self.config["selected_mobs"]) > 0:
                 continue
 
-            self.convert_penya_to_perins_timer()
+            # self.convert_penya_to_perins_timer() # not needed right now
 
             if current_mob_info_index > (len(self.config["selected_mobs"]) - 1):
                 current_mob_info_index = 0
@@ -197,21 +198,25 @@ class Bot:
         frame_center = (frame_w // 2, frame_h // 2)
 
         monsters_count = mobs_killed
-        mob_pos = get_point_near_center(frame_center, points)
+        self.keyboard.hold_key(VKEY["n"], press_time=0.06) # clear target
+        mob_pos = get_point_nearest_center(frame_center, points)
         self.mouse.move(to_point=mob_pos, duration=0.1)
-        if self.__check_mob_existence():
-            self.mouse.left_click()
-            self.keyboard.hold_key(VKEY["F1"], press_time=0.06)
+        self.mouse.left_click()
+        self.keyboard.hold_key(VKEY["w"], press_time=0.06) # move back in case we miss
+        sleep(0.5)
+        if self.__check_mob_still_alive(current_mob):
+            self.keyboard.hold_key(VKEY["1"], press_time=0.06) # attack
             self.mouse.move_outside_game(duration=0.2)
             fight_time = time()
             while True:
                 if not self.__check_mob_still_alive(current_mob):
                     monsters_count += 1
+                    self.keyboard.hold_key(VKEY["2"], press_time=round(uniform(2.5, 2.7), 1)) # pick up
                     break
                 else:
                     if (time() - fight_time) >= int(self.config["fight_time_limit_sec"]):
                         # Unselect the mob if the fight limite is over
-                        self.keyboard.hold_key(VKEY["esc"], press_time=0.06)
+                        self.keyboard.hold_key(VKEY["n"], press_time=0.06) # clear target
                         break
                     sleep(float(self.config["delay_to_check_mob_still_alive_sec"]))
         return monsters_count
@@ -219,7 +224,7 @@ class Bot:
     def __mobs_not_available_on_screen(self):
         print("No Mobs in Area, moving.")
         self.keyboard.human_turn_back()
-        self.keyboard.hold_key(VKEY["w"], press_time=4)
+        #self.keyboard.hold_key(VKEY["w"], press_time=4)
         sleep(0.1)
         self.keyboard.press_key(VKEY["s"])
 

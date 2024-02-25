@@ -34,6 +34,18 @@ def get_point_near_center(center, points):
         i = 0
     return best_point[i]
 
+# Return the nearest point to the center
+def get_point_nearest_center(center, points):
+    dist_two_points = lambda center, point: ((center[0] - point[0]) ** 2 + (center[1] - point[1]) ** 2) ** (1 / 2)
+    closest_dist = 999999  # Start with a big number for smaller search
+    best_point = points[0]
+    for point in points:
+        dist = dist_two_points(center, point)
+        if dist < closest_dist:
+            closest_dist = dist
+            best_point = point
+    return best_point
+
 
 def start_countdown(voice_engine, sleep_time_sec=5):
     if not voice_engine.isBusy():
