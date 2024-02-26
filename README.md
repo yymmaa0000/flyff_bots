@@ -1,21 +1,55 @@
 <br />
 <p align="center">
-  <h3 align="center">Flyff Bots</h3>
+  <h3 align="center">My Flyff Bots</h3>
 
   <p align="center">
-	Flyff is a MMORPG game that I used to play when I was a kid. I always wanted to create a bot for it and here I am.
-	This project is a set of bots that I created for Flyff. It has bot for farming and for upgrading your items.
+	This is a project I built on top of the original forked FlyFF vision bot. I have made the bot compatible with Flyff Universe.
+	Please get familiar with the original project first before reaading the rest.
 	<br />
 	:warning: Windows only :warning:
     <br />
 	<br />
-    <a href="https://github.com/xandao-dev/flyff-bots"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/xandao-dev/flyff-bots"><strong>Explore the original project»</strong></a>
     <br />
-    <a href="https://github.com/xandao-dev/flyff-bots/issue">Report Bug</a>
-    ·
-    <a href="https://github.com/xandao-dev/flyff-bots/issues">Request Feature</a>
   </p>
 </p>
+
+## Improved Foreground Vision Bot
+
+The vision bot now works with Flyff Universe. I have also improved the character patroling algorithm and added a heal bot that automatically heals the player when the HP drops below 60%.
+
+No UI changes.
+
+### Game Setup Requirement
+Make the following keyboard setup:
+
+1 = auto attack
+
+2 = pick up
+
+3 = heal
+
+N = cancel target
+
+Play the game in a 1920*1080 resolution screen. Press F11 to maximize your game.
+
+Set your interface theme to Gold. Put your character health window to the top left corner of your game interface. Change the window size to the smallest and set the display to percentage.
+
+https://user-images.githubusercontent.com/22106326/150702322-967cf2d8-d789-45e6-af61-503c96dc2ea9.mp4
+
+The reason for such setup is that the bot will determine the player's health by taking a screen shot of your health window and parse its health percentage values.
+
+### Installation
+
+To make the text recognition work, you need to install pytesseract. You can search google how to install that
+
+Install tesseract for windows. You need to visit the Windows section of this link:
+https://tesseract-ocr.github.io/tessdoc/Installation.html
+
+To access tesseract-OCR from any location, you may have to add the directory where the tesseract-OCR binaries are located to the Path variables, maybe something like C:\Program Files\Tesseract-OCR.
+
+To do that, refer to here: https://www.geeksforgeeks.org/how-to-set-up-command-prompt-for-python-in-windows10/
+
 
 
 <details open="open">
