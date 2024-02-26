@@ -33,7 +33,7 @@ C = buffs action bar
 
 N = cancel target
 
-Play the game in a 1920*1080 resolution screen. Press F11 to maximize your game.
+Because Flyff Universe is played on a browser. We cannot take a screen shot of it in background. Therefore, you need to have 2 screens. Play the game in a 1920*1080 resolution main screen. Press F11 to maximize your game. Move the bot UI to a secondary screen.
 
 Set your interface theme to Gold. Put your character health window to the top left corner of your game interface. Change the window size to the smallest and set the display to percentage.
 
