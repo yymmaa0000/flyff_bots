@@ -2,6 +2,7 @@ import collections
 from threading import Thread
 from time import sleep, time
 from random import randint, uniform
+from pytesseract import image_to_string
 
 import pyttsx3
 from assets.Assets import GeneralAssets, MobInfo
@@ -51,6 +52,7 @@ class Bot:
         self.gui_window = gui_window
         self.voice_engine = pyttsx3.init()
         self.wincap = WindowCapture(window_handler)
+        self.healthBarCap = WindowCapture(window_handler)
         self.mouse = HumanMouse(window_handler, self.wincap.get_screen_pos)
         self.keyboard = HumanKeyboard(window_handler)
         Thread(target=self.__frame_thread, daemon=True).start()
@@ -58,7 +60,8 @@ class Bot:
 
     def start(self):
         self.__farm_thread_running = True
-        Thread(target=self.__farm_thread, daemon=True).start()
+        #Thread(target=self.__farm_thread, daemon=True).start()
+        Thread(target=self.__heal_thread, daemon=True).start()
 
     def stop(self):
         self.__farm_thread_running = False
@@ -66,7 +69,7 @@ class Bot:
     def set_config(self, **options):
         """Set the config options for the bot.
 
-        :param \**options:
+        :param **options:
             show_frames: bool
                 Show the video frames of the bot. Default: False
             show_mobs_pos_boxes: bool
@@ -149,6 +152,22 @@ class Bot:
             fps = round(1 / (sum(fps_circular_buffer) / len(fps_circular_buffer)))
             self.gui_window.write_event_value("video_fps", f"Video FPS: {fps}")
             loop_time = time()
+
+    def __heal_thread(self):
+        # print("Heal Thread is now running.")
+        while True:
+            img = self.healthBarCap.get_frame_health_portion((106, 35, 168, 96))
+            # get text and split in array
+            text_list = image_to_string(img, lang='eng').split('\n')
+            # Delete empty strings
+            text_list = [i for i in text_list if i.strip()]
+            #Print the list
+            print(', '.join(text_list))
+
+            if not self.__farm_thread_running:
+                break
+            sleep(0.5)
+        # print("Heal Thread is stopped.")
 
     def __farm_thread(self):
         start_countdown(self.voice_engine, 3)

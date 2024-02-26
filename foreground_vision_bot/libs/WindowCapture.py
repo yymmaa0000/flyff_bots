@@ -1,4 +1,5 @@
 from PIL import ImageGrab
+from PIL import Image
 import cv2 as cv
 import numpy as np
 import win32con
@@ -28,11 +29,37 @@ class WindowCapture:
         self.offset_x = 0
         self.offset_y = 0
         self.__update_size_and_offset()
+    
+    def get_frame_health_portion(self, bbox=(8, 30, 80, 80)):
+        """
+        Take a screenshot of the portion of the target window described by the bbox. Works with windows
+        foreground. Fullscreen or windowed. But doesn't work with minimized 
+        or windows outside the screen.
 
+        :return: PIL img
+        """
+        image = ImageGrab.grab(bbox)
+        #image = image.convert('1', dither=Image.NONE) # Convert PIL img to bw, not useful
+
+        # change all pixel to white if not black for better text recognition
+        pixels = image.load()
+        for i in range(image.size[0]): # for every pixel:
+            for j in range(image.size[1]):
+                if pixels[i,j][0] > 210 and pixels[i,j][1] > 210 and pixels[i,j][2] > 210:
+                    pixels[i,j] = (0, 0 ,0)
+                else:
+                    pixels[i,j] = (255, 255 ,255)
+
+        # debug
+        image.save("D:\\Projects\\flyff_bots\\foreground_vision_bot\\screenshot.png")
+        print("image saved to screenshot.png")
+
+        return image
+    
     def get_frame(self):
         """
-        Take a screenshot of the target window. Works with windows in background 
-        and foreground. Fullscreen or windowed. But doesn't work with minimized 
+        Take a screenshot of the target window. Only works with windows in foreground. 
+        Fullscreen or windowed. But doesn't work with minimized 
         or windows outside the screen.
 
         :return: (numpy array, numpy array). The first array is the image in BGR format, 3 channels.

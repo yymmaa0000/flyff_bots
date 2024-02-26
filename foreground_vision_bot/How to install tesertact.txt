@@ -1,0 +1,11 @@
+To make the text recognition work, you need to install pytesseract
+Install pytesseract
+search google how to install that
+
+install tesseract for windows:
+https://tesseract-ocr.github.io/tessdoc/Installation.html
+Go to the windows section
+
+To access tesseract-OCR from any location you may have to add the directory where the tesseract-OCR binaries are located to the Path variables, maybe something like C:\Program Files\Tesseract-OCR.
+To do that, refer to here:
+https://www.geeksforgeeks.org/how-to-set-up-command-prompt-for-python-in-windows10/
