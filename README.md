@@ -29,7 +29,7 @@ Make the following keyboard setup:
 
 3 = heal
 
-c = buffs action bar
+C = buffs action bar
 
 N = cancel target
 
