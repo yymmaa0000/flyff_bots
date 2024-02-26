@@ -23,11 +23,13 @@ No UI changes.
 ### Game Setup Requirement
 Make the following keyboard setup:
 
-1 = auto attack
+1 = auto attack. You could also change the code to make it attack by pressing C to cast spells from action bar or other key slot
 
 2 = pick up
 
 3 = heal
+
+c = buffs action bar
 
 N = cancel target
 
