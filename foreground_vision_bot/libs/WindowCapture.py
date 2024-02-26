@@ -51,8 +51,8 @@ class WindowCapture:
                     pixels[i,j] = (255, 255 ,255)
 
         # debug
-        image.save("D:\\Projects\\flyff_bots\\foreground_vision_bot\\screenshot.png")
-        print("image saved to screenshot.png")
+        # image.save("D:\\Projects\\flyff_bots\\foreground_vision_bot\\screenshot.png")
+        # print("image saved to screenshot.png")
 
         return image
     

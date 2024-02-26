@@ -157,16 +157,40 @@ class Bot:
         # print("Heal Thread is now running.")
         while True:
             img = self.healthBarCap.get_frame_health_portion((106, 35, 168, 96))
+            
             # get text and split in array
             text_list = image_to_string(img, lang='eng').split('\n')
             # Delete empty strings
             text_list = [i for i in text_list if i.strip()]
-            #Print the list
-            print(', '.join(text_list))
+
+            canParse = False
+            health_percent = 100.0
+            if (len(text_list) > 0):
+                try:
+                    health_percent = float(text_list[0][:-1]) # strip last character
+                    canParse = True
+                except:
+                    health_percent = 100.0
+
+            if (health_percent <= 60.0):
+                self.keyboard.hold_key(VKEY["3"], press_time=0.06) # take health pill
+
+            # TO DO: auto heal mp and fp, and track exp
+
+            # Debug: Print the list
+            # print("Raw Identified health texts:",', '.join(text_list))
+            # if (canParse):
+            #     print("Parssed health =", health_percent)
+            # else:
+            #     print("Parse failed! Health is assumed to be 100.0")
 
             if not self.__farm_thread_running:
                 break
-            sleep(0.5)
+
+            if (canParse):
+                sleep(0.5)
+            else:
+                sleep(0.1)
         # print("Heal Thread is stopped.")
 
     def __farm_thread(self):
