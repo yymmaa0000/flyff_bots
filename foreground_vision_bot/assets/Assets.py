@@ -14,12 +14,19 @@ mob_oseti_electricity_path = str(Path(__file__).parent / "names" / "oseti_electr
 mob_carvi_fire_path = str(Path(__file__).parent / "names" / "carvi_fire.png")
 mob_nyamuli_fire_path = str(Path(__file__).parent / "names" / "nyamuli_fire.png")
 mob_aibatt_small_path = str(Path(__file__).parent / "names" / "Aibatt_Small.png")
+mob_pukepuke_small_path = str(Path(__file__).parent / "names" / "Pukepuke_Small.png")
 
-mob_type_wind_path = str(Path(__file__).parent / "mob_types" / "wind.png")
-mob_type_fire_path = str(Path(__file__).parent / "mob_types" / "fire.png")
-mob_type_soil_path = str(Path(__file__).parent / "mob_types" / "soil.png")
-mob_type_water_path = str(Path(__file__).parent / "mob_types" / "water.png")
-mob_type_electricity_path = str(Path(__file__).parent / "mob_types" / "electricity.png")
+# mob_type_wind_path = str(Path(__file__).parent / "mob_types" / "wind.png")
+# mob_type_fire_path = str(Path(__file__).parent / "mob_types" / "fire.png")
+# mob_type_soil_path = str(Path(__file__).parent / "mob_types" / "soil.png")
+# mob_type_water_path = str(Path(__file__).parent / "mob_types" / "water.png")
+# mob_type_electricity_path = str(Path(__file__).parent / "mob_types" / "electricity.png")
+
+mob_type_wind_path = str(Path(__file__).parent / "mob_types" / "wind_weak.png")
+mob_type_fire_path = str(Path(__file__).parent / "mob_types" / "fire_weak.png")
+mob_type_soil_path = str(Path(__file__).parent / "mob_types" / "soil_weak.png")
+mob_type_water_path = str(Path(__file__).parent / "mob_types" / "water_weak.png")
+mob_type_electricity_path = str(Path(__file__).parent / "mob_types" / "electricity_weak.png")
 
 mob_life_bar_path = str(Path(__file__).parent / "general" / "mob_life_bar.png")
 user_target_bar_path = str(Path(__file__).parent / "general" / "user_target_bar.png")
@@ -43,6 +50,14 @@ class MobInfo:
         "height_offset": 20,
         "name_img": cv.imread(mob_aibatt_small_path, cv.IMREAD_GRAYSCALE),
         "element_img": MobType.WIND,
+    }
+    PUKEPUKE = {
+        "name": "pukepuke",
+        "element": "fire",
+        "map_name": "Flaris",
+        "height_offset": 40,
+        "name_img": cv.imread(mob_pukepuke_small_path, cv.IMREAD_GRAYSCALE),
+        "element_img": MobType.FIRE,
     }
     ROSPOSA = {
         "name": "rosposa",

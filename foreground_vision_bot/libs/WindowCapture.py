@@ -45,7 +45,7 @@ class WindowCapture:
         pixels = image.load()
         for i in range(image.size[0]): # for every pixel:
             for j in range(image.size[1]):
-                if pixels[i,j][0] > 210 and pixels[i,j][1] > 210 and pixels[i,j][2] > 210:
+                if pixels[i,j][0] > 190 and pixels[i,j][1] > 190 and pixels[i,j][2] > 190:
                     pixels[i,j] = (0, 0 ,0)
                 else:
                     pixels[i,j] = (255, 255 ,255)

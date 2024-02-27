@@ -60,7 +60,7 @@ class Bot:
 
     def start(self):
         self.__farm_thread_running = True
-        #Thread(target=self.__farm_thread, daemon=True).start()
+        Thread(target=self.__farm_thread, daemon=True).start()
         Thread(target=self.__heal_thread, daemon=True).start()
 
     def stop(self):
