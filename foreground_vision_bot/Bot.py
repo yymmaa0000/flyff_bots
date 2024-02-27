@@ -245,8 +245,8 @@ class Bot:
         mob_pos = get_point_nearest_center(frame_center, points)
         self.mouse.move(to_point=mob_pos, duration=0.1)
         self.mouse.left_click()
-        self.keyboard.hold_key(VKEY["w"], press_time=0.06) # move back in case we miss
-        sleep(0.5)
+        self.keyboard.hold_key(VKEY["s"], press_time=0.06) # move back in case we miss
+        sleep(0.3)
         if self.__check_mob_still_alive(current_mob):
             self.keyboard.hold_key(VKEY["1"], press_time=0.06) # attack
             self.mouse.move_outside_game(duration=0.2)
@@ -342,7 +342,7 @@ class Bot:
         # frame_cute_area get the top of the screen to see if the mob type icon is still visible
         _, _, _, passed_threshold, drawn_frame = CV.match_template(
             frame=self.frame,
-            crop_area=(0, 50, 200, -200),
+            crop_area=(50, 130, 750, -750),
             template=current_mob["element_img"],
             threshold=float(self.config["mob_still_alive_match_threshold"]),
             frame_to_draw=self.debug_frame if debug else None,
