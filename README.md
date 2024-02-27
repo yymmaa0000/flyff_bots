@@ -14,11 +14,16 @@
   </p>
 </p>
 
-## Improved Foreground Vision Bot
+## Improvement on the Foreground Vision Bot
 
-The vision bot now works with Flyff Universe. I have also improved the character patroling algorithm and added a heal bot that automatically heals the player when the HP drops below 60%.
-
-No UI changes.
+This project made the following improvement on the  Foreground Vision Bot to make it work with Flyff Universe. 
+* Added a heal bot that automatically heals the player when the HP drops below 60%.
+* Added prioritized handeling of red named mobs.
+* Improved the mob selection algorithm to prioritize selecting mobs closeby in the actual 3D space.
+* Improved the character patroling algorithm.
+* Automatic pickup after killing each mob.
+  
+There is no UI changes.
 
 ### Game Setup Requirement
 Make the following keyboard setup:
@@ -34,6 +39,8 @@ C = buffs action bar
 N = cancel target
 
 Because Flyff Universe is played on a browser. We cannot take a screen shot of it in background. Therefore, you need to have 2 screens. Play the game in a 1920*1080 resolution main screen. Press F11 to maximize your game. Move the bot UI to a secondary screen.
+
+Put your camera view angle at around 30 degrees above ground and zoom it to a distance that is not too close or too far.
 
 Set your interface theme to Gold. Put your character health window to the top left corner of your game interface. Change the window size to the smallest and set the display to percentage.
 
