@@ -22,6 +22,7 @@ This project made the following improvement on the  Foreground Vision Bot to mak
 * Improved the mob selection algorithm to prioritize selecting mobs closeby in the actual 3D space.
 * Improved the character patroling algorithm.
 * Automatic pickup after killing each mob.
+* Automatic self rebuff every certain time interval.
   
 There is no UI changes.
 
