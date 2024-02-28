@@ -4,6 +4,7 @@ from collections import deque
 import win32gui
 from pyfiglet import Figlet
 
+import math
 
 def get_window_handlers():
     hwnd_from_title = {}
@@ -34,10 +35,32 @@ def get_point_near_center(center, points):
         i = 0
     return best_point[i]
 
-# Return the nearest point to the center
-def get_point_nearest_center(center, points):
-    dist_two_points = lambda center, point: ((center[0] - point[0]) ** 2 + (center[1] - point[1]) ** 2) ** (1 / 2)
-    closest_dist = 999999  # Start with a big number for smaller search
+# Return the distance from point to center in y axis in the actual 3D space
+def get_y_cord_in_3D_space(center, point):
+    view_angle = math.radians(50)
+    camera_angle = math.radians(40)
+    L = center*math.tan(view_angle)
+    a = math.radians(90) - camera_angle
+    x = abs(point-center)
+    tanb = L/x
+    if point > center:
+        return x/(math.cos(a) + math.sin(a)/tanb)
+    elif point < center:
+        return x/(math.cos(a)/math.tan(a) - math.cos(a)/tanb)
+    else:
+        return 0.0
+
+# Return the distance from point to center in the actual 3D space
+def dist_two_points(center, point):
+    x = center[0] - point[0]
+    y = get_y_cord_in_3D_space(center[1], point[1])
+    # print("center = ", center, " point = ", point, "y dist = ",y)
+
+    return x ** 2 + y ** 2
+
+# Return the nearest point to the center in the actual 3D space
+def get_point_nearest_center_3D(center, points):
+    closest_dist = 999999999  # Start with a big number for smaller search
     best_point = points[0]
     for point in points:
         dist = dist_two_points(center, point)

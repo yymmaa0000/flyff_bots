@@ -11,7 +11,7 @@ from libs.human_mouse.HumanMouse import HumanMouse
 from libs.HumanKeyboard import VKEY, HumanKeyboard
 from libs.WindowCapture import WindowCapture
 from utils.decorators import throttle
-from utils.helpers import get_point_nearest_center, start_countdown
+from utils.helpers import get_point_nearest_center_3D, start_countdown
 from utils.SyncedTimer import SyncedTimer
 
 
@@ -242,7 +242,7 @@ class Bot:
 
         monsters_count = mobs_killed
         self.keyboard.hold_key(VKEY["n"], press_time=0.06) # clear target
-        mob_pos = get_point_nearest_center(frame_center, points)
+        mob_pos = get_point_nearest_center_3D(frame_center, points)
         self.mouse.move(to_point=mob_pos, duration=0.1)
         self.mouse.left_click()
         self.keyboard.hold_key(VKEY["s"], press_time=0.06) # move back in case we miss
@@ -254,7 +254,7 @@ class Bot:
             while True:
                 if not self.__check_mob_still_alive(current_mob):
                     monsters_count += 1
-                    self.keyboard.hold_key(VKEY["2"], press_time=round(uniform(2.5, 2.7), 1)) # pick up
+                    self.keyboard.hold_key(VKEY["2"], press_time=round(uniform(2.3, 2.5), 1)) # pick up
                     break
                 else:
                     if (time() - fight_time) >= int(self.config["fight_time_limit_sec"]):
