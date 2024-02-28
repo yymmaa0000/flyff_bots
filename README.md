@@ -41,15 +41,17 @@ N = cancel target
 
 Because Flyff Universe is played on a browser. We cannot take a screen shot of it in background. Therefore, you need to have 2 screens. Play the game in a 1920*1080 resolution main screen. Press F11 to maximize your game. Move the bot UI to a secondary screen.
 
-Put your camera view angle at around 30 degrees above ground and zoom it to a distance that is not too close or too far.
+Put your camera view angle at around 30-40 degrees above ground and zoom it to a distance that is not too close or too far. Make the infinite ground horizon just be at the very top of your screen.
 
-Set your interface theme to Gold. Put your character health window to the top left corner of your game interface. Change the window size to the smallest and set the display to percentage.
+Set your interface theme to Gold. Put your character status window containing the health bar to the top left corner of your game interface. Change the window size to the smallest and set the display to percentage.
 
 <img src="foreground_vision_bot/docs/Health_Window_Example.png" alt="Flyff bot">
 
 The reason for such setup is that the bot will determine the player's health by taking a screen shot of your health window and parse its health percentage values.
 
 <img src="foreground_vision_bot/docs/HealthBar_original.png" alt="Flyff bot">   Parsed into        <img src="foreground_vision_bot/docs/HealthBar_processed.png" alt="Flyff bot">
+
+Remove any useless icon from your screen, such as the notification and calender icon. They are typically under your character status window and can be removed by clicking them.
 
 ### Installation
 
