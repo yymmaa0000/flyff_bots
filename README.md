@@ -54,9 +54,11 @@ The reason for such setup is that the bot will determine the player's health by 
 
 <img src="foreground_vision_bot/docs/HealthBar_original.png" alt="Flyff bot">   Parsed into        <img src="foreground_vision_bot/docs/HealthBar_processed.png" alt="Flyff bot">
 
+Other important setting in the Options dialog: set FOV to 100%, Check Auto Attack and Fixed Camera. Do not check Pixel Perfect Cursor Selection. You could also check Hide Other Players if you want.
+
 Remove any useless icon from your screen, such as the notification, battle pass, achievements, and events icon. They are typically under your character status window and can be removed by clicking them. 
 
-Hide all your buffs.
+Turn off other unnecessary windows like Navigation. Hide all your buffs.
 
 ### Installation
 
