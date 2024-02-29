@@ -1,6 +1,6 @@
 import collections
 from threading import Thread
-from time import sleep, time
+from time import sleep, time, gmtime, strftime
 from random import randint, uniform
 from pytesseract import image_to_string
 
@@ -35,7 +35,7 @@ class Bot:
             "mobs_kill_goal": None,
             "fight_time_limit_sec": 8,
             "delay_to_check_mob_still_alive_sec": 0.25,
-            "convert_penya_to_perins_timer_min": 30,
+            "rebuff_timer_min": 10,
             "selected_mobs": [],
         }
         self.gui_window = None
@@ -43,10 +43,11 @@ class Bot:
         self.debug_frame = None
         self.__farm_thread_running = False
 
-        # Synced Timers
-        self.convert_penya_to_perins_timer = SyncedTimer(
-            self.__convert_penya_to_perins, float(self.config["convert_penya_to_perins_timer_min"]) * 60
-        )
+        # # Synced Timers
+        # self.rebuff_timer = SyncedTimer(
+        #     self.__rebuff, float(self.config["rebuff_timer_min"]) * 60
+        # )
+        self.mLastRebuffTime = 0
 
     def setup(self, window_handler, gui_window):
         self.gui_window = gui_window
@@ -94,21 +95,21 @@ class Bot:
                 The time limit to fight the mob, after this time it will target another monster. Unity in seconds. Default: 8
             delay_to_check_mob_still_alive_sec: float
                 The delay to check if the mob is still alive when it's fighting. Unity in seconds. Default: 0.25
-            convert_penya_to_perins_timer_min: int
-                The time to convert the penya to perins. Unity in minutes. Default: 30
+            rebuff_timer_min: int
+                The time to rebuff. Unity in minutes. Default: 10
             selected_mobs: list
                 The list of mobs to kill. Default: []
         """
         for key, value in options.items():
             self.config[key] = value
 
-        self.__update_timer_configs()
+        # self.__update_timer_configs()
 
     def get_all_mobs(self):
         return MobInfo.get_all_mobs()
 
-    def __update_timer_configs(self):
-        self.convert_penya_to_perins_timer.wait_seconds = float(self.config["convert_penya_to_perins_timer_min"]) * 60
+    # def __update_timer_configs(self):
+    #     self.rebuff_timer.wait_seconds = float(self.config["rebuff_timer_min"]) * 60
 
     def __frame_thread(self):
         """
@@ -202,7 +203,7 @@ class Bot:
             if not len(self.config["selected_mobs"]) > 0:
                 continue
 
-            # self.convert_penya_to_perins_timer() # not needed right now
+            self.__rebuff_timer()
 
             if current_mob_info_index > (len(self.config["selected_mobs"]) - 1):
                 current_mob_info_index = 0
@@ -254,7 +255,7 @@ class Bot:
             while True:
                 if not self.__check_mob_still_alive(current_mob):
                     monsters_count += 1
-                    self.keyboard.hold_key(VKEY["2"], press_time=round(uniform(2.3, 2.5), 1)) # pick up
+                    self.keyboard.hold_key(VKEY["2"], press_time=round(uniform(2.2, 2.4), 1)) # pick up
                     break
                 else:
                     if (time() - fight_time) >= int(self.config["fight_time_limit_sec"]):
@@ -270,6 +271,15 @@ class Bot:
         #self.keyboard.hold_key(VKEY["w"], press_time=4)
         sleep(0.1)
         self.keyboard.press_key(VKEY["s"])
+
+    # handels rebuffing
+    def __rebuff_timer(self):
+        currTime = time()
+        if ((currTime - self.mLastRebuffTime) >= (float(self.config["rebuff_timer_min"]) * 60)):
+            print("Rebuffing! ",strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+            self.keyboard.press_key(VKEY["spacebar"])
+            sleep(3)
+        self.mLastRebuffTime = currTime
 
     def __convert_penya_to_perins(self):
         # Open the inventory

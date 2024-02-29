@@ -161,18 +161,18 @@ class Gui:
                     self.window["-DELAY_TO_CHECK_MOB_STILL_ALIVE_SEC-"].update("0.25")
                     bot.set_config(delay_to_check_mob_still_alive_sec=0.25)
                     sg.user_settings_set_entry("-DELAY_TO_CHECK_MOB_STILL_ALIVE_SEC-", "0.25")
-            if event == "-CONVERT_PENYA_TO_PERINS_TIMER_MIN-":
+            if event == "-REBUFF_TIMER_MIN-":
                 try:
-                    convert_penya_to_perins_timer_min = float(values["-CONVERT_PENYA_TO_PERINS_TIMER_MIN-"])
-                    bot.set_config(convert_penya_to_perins_timer_min=convert_penya_to_perins_timer_min)
+                    rebuff_timer_min = float(values["-REBUFF_TIMER_MIN-"])
+                    bot.set_config(rebuff_timer_min=rebuff_timer_min)
                     sg.user_settings_set_entry(
-                        "-CONVERT_PENYA_TO_PERINS_TIMER_MIN-", values["-CONVERT_PENYA_TO_PERINS_TIMER_MIN-"]
+                        "-REBUFF_TIMER_MIN-", values["-REBUFF_TIMER_MIN-"]
                     )
                 except ValueError:
-                    sg.cprint("Invalid convert penya to perins timer, must be in minutes")
-                    self.window["-CONVERT_PENYA_TO_PERINS_TIMER_MIN-"].update("30")
-                    bot.set_config(convert_penya_to_perins_timer_min=30)
-                    sg.user_settings_set_entry("-CONVERT_PENYA_TO_PERINS_TIMER_MIN-", "30")
+                    sg.cprint("Invalid rebuff timer, must be in minutes")
+                    self.window["-REBUFF_TIMER_MIN-"].update("10")
+                    bot.set_config(rebuff_timer_min=30)
+                    sg.user_settings_set_entry("-REBUFF_TIMER_MIN-", "10")
 
             # STATUS - Text events
             if event in self.logger_events:
@@ -248,9 +248,9 @@ class Gui:
         self.window["-DELAY_TO_CHECK_MOB_STILL_ALIVE_SEC-"].update(delay_to_check_mob_still_alive_sec)
         bot.set_config(delay_to_check_mob_still_alive_sec=delay_to_check_mob_still_alive_sec)
 
-        convert_penya_to_perins_timer_min = sg.user_settings_get_entry("-CONVERT_PENYA_TO_PERINS_TIMER_MIN-", "30")
-        self.window["-CONVERT_PENYA_TO_PERINS_TIMER_MIN-"].update(convert_penya_to_perins_timer_min)
-        bot.set_config(convert_penya_to_perins_timer_min=convert_penya_to_perins_timer_min)
+        rebuff_timer_min = sg.user_settings_get_entry("-REBUFF_TIMER_MIN-", "10")
+        self.window["-REBUFF_TIMER_MIN-"].update(rebuff_timer_min)
+        bot.set_config(rebuff_timer_min=rebuff_timer_min)
 
         all_mobs = bot.get_all_mobs()
         saved_mobs_indexes = sg.user_settings_get_entry("saved_mobs_indexes", [])
@@ -430,9 +430,9 @@ class Gui:
                             "0.25", size=(10, 1), enable_events=True, key="-DELAY_TO_CHECK_MOB_STILL_ALIVE_SEC-"
                         ),
                     ],
-                    [sg.Text("Timer to convert penya to perins (m):")],
+                    [sg.Text("Timer to rebuff (m):")],
                     [
-                        sg.InputText("30", size=(10, 1), enable_events=True, key="-CONVERT_PENYA_TO_PERINS_TIMER_MIN-"),
+                        sg.InputText("10", size=(10, 1), enable_events=True, key="-REBUFF_TIMER_MIN-"),
                     ],
                 ],
                 pad=((5, 15), (5, 5)),
