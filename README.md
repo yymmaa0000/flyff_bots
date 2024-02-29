@@ -16,6 +16,8 @@
 
 ## Improvement on the Foreground Vision Bot
 
+<img src="foreground_vision_bot/docs/newUI.png" alt="Flyff bot">
+
 This project made the following improvement on the  Foreground Vision Bot to make it work with Flyff Universe. 
 * Added a heal bot that automatically heals the player when the HP drops below 60%.
 * Added prioritized handeling of red named mobs.
@@ -24,7 +26,8 @@ This project made the following improvement on the  Foreground Vision Bot to mak
 * Automatic pickup after killing each mob.
 * Automatic self rebuff every certain time interval.
   
-There is no UI changes.
+UI changes
+* Replaced "Timer to convert penya to perins" option with the "Time to rebuff" option
 
 ### Game Setup Requirement
 Make the following keyboard setup:
