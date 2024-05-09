@@ -5,7 +5,7 @@ from random import randint, uniform
 from pytesseract import image_to_string
 
 import pyttsx3
-from assets.Assets import GeneralAssets, MobInfo
+from assets.Assets import GeneralAssets
 from libs.ComputerVision import ComputerVision as CV
 from libs.human_mouse.HumanMouse import HumanMouse
 from libs.HumanKeyboard import VKEY, HumanKeyboard
@@ -35,7 +35,7 @@ class Bot:
             "mobs_kill_goal": None,
             "fight_time_limit_sec": 8,
             "delay_to_check_mob_still_alive_sec": 0.25,
-            "rebuff_timer_min": 10,
+            "healing_interval_ms": 10,
             "selected_mobs": [],
         }
         self.gui_window = None
@@ -45,7 +45,7 @@ class Bot:
 
         # # Synced Timers
         # self.rebuff_timer = SyncedTimer(
-        #     self.__rebuff, float(self.config["rebuff_timer_min"]) * 60
+        #     self.__rebuff, float(self.config["healing_interval_ms"]) * 60
         # )
         self.mLastRebuffTime = 0
 
@@ -95,7 +95,7 @@ class Bot:
                 The time limit to fight the mob, after this time it will target another monster. Unity in seconds. Default: 8
             delay_to_check_mob_still_alive_sec: float
                 The delay to check if the mob is still alive when it's fighting. Unity in seconds. Default: 0.25
-            rebuff_timer_min: int
+            healing_interval_ms: int
                 The time to rebuff. Unity in minutes. Default: 10
             selected_mobs: list
                 The list of mobs to kill. Default: []
@@ -105,11 +105,8 @@ class Bot:
 
         # self.__update_timer_configs()
 
-    def get_all_mobs(self):
-        return MobInfo.get_all_mobs()
-
     # def __update_timer_configs(self):
-    #     self.rebuff_timer.wait_seconds = float(self.config["rebuff_timer_min"]) * 60
+    #     self.rebuff_timer.wait_seconds = float(self.config["healing_interval_ms"]) * 60
 
     def __frame_thread(self):
         """
@@ -275,7 +272,7 @@ class Bot:
     # handels rebuffing
     def __rebuff_timer(self):
         currTime = time()
-        if ((currTime - self.mLastRebuffTime) >= (float(self.config["rebuff_timer_min"]) * 60)):
+        if ((currTime - self.mLastRebuffTime) >= (float(self.config["healing_interval_ms"]) * 60)):
             print("Rebuffing! ",strftime("%Y-%m-%d %H:%M:%S", gmtime()))
             self.keyboard.hold_key(VKEY["n"], press_time=0.06) # clear target
             self.keyboard.hold_key(VKEY["4"], press_time=0.06) # equip stick
