@@ -81,13 +81,16 @@ class Gui:
                 bot.set_config(show_matches_text=values["-SHOW_MATCHES_TEXT-"])
                 sg.user_settings_set_entry("-SHOW_MATCHES_TEXT-", values["-SHOW_MATCHES_TEXT-"])
             if event == "-SHOW_BOXES-":
-                bot.set_config(show_mobs_pos_boxes=values["-SHOW_BOXES-"])
+                bot.set_config(show_signal_pos_boxes=values["-SHOW_BOXES-"])
                 sg.user_settings_set_entry("-SHOW_BOXES-", values["-SHOW_BOXES-"])
             if event == "-SHOW_MARKERS-":
-                bot.set_config(show_mobs_pos_markers=values["-SHOW_MARKERS-"])
+                bot.set_config(show_signal_pos_markers=values["-SHOW_MARKERS-"])
                 sg.user_settings_set_entry("-SHOW_MARKERS-", values["-SHOW_MARKERS-"])
 
             # BOT OPTIONS - General options
+            if event == "-SIGNAL_MATCH_THRESHOLD-":
+                bot.set_config(signal_match_threshold=values["-SIGNAL_MATCH_THRESHOLD-"])
+                sg.user_settings_set_entry("-SIGNAL_MATCH_THRESHOLD-", values["-SIGNAL_MATCH_THRESHOLD-"])
             if event == "-HEALING_INTERVAL_MS-":
                 try:
                     healing_interval_ms = float(values["-HEALING_INTERVAL_MS-"])
@@ -125,13 +128,17 @@ class Gui:
         self.window["-SHOW_MATCHES_TEXT-"].update(show_matches_text)
         bot.set_config(show_matches_text=show_matches_text)
 
-        show_mobs_pos_boxes = sg.user_settings_get_entry("-SHOW_BOXES-", False)
-        self.window["-SHOW_BOXES-"].update(show_mobs_pos_boxes)
-        bot.set_config(show_mobs_pos_boxes=show_mobs_pos_boxes)
+        show_signal_pos_boxes = sg.user_settings_get_entry("-SHOW_BOXES-", False)
+        self.window["-SHOW_BOXES-"].update(show_signal_pos_boxes)
+        bot.set_config(show_signal_pos_boxes=show_signal_pos_boxes)
 
-        show_mobs_pos_markers = sg.user_settings_get_entry("-SHOW_MARKERS-", False)
-        self.window["-SHOW_MARKERS-"].update(show_mobs_pos_markers)
-        bot.set_config(show_mobs_pos_markers=show_mobs_pos_markers)
+        show_signal_pos_markers = sg.user_settings_get_entry("-SHOW_MARKERS-", False)
+        self.window["-SHOW_MARKERS-"].update(show_signal_pos_markers)
+        bot.set_config(show_signal_pos_markers=show_signal_pos_markers)
+
+        signal_match_threshold = sg.user_settings_get_entry("-SIGNAL_MATCH_THRESHOLD-", 0.9)
+        self.window["-SIGNAL_MATCH_THRESHOLD-"].update(signal_match_threshold)
+        bot.set_config(signal_match_threshold=signal_match_threshold)
 
         healing_interval_ms = sg.user_settings_get_entry("-HEALING_INTERVAL_MS-", "1000")
         self.window["-HEALING_INTERVAL_MS-"].update(healing_interval_ms)
@@ -202,17 +209,29 @@ class Gui:
                     ],
                     [
                         sg.pin(
-                            sg.Checkbox("Show mobs boxes", False, visible=False, enable_events=True, key="-SHOW_BOXES-")
+                            sg.Checkbox("Show signal boxes", False, visible=False, enable_events=True, key="-SHOW_BOXES-")
                         )
                     ],
                     [
                         sg.pin(
                             sg.Checkbox(
-                                "Show mobs markers", False, visible=False, enable_events=True, key="-SHOW_MARKERS-"
+                                "Show signal markers", False, visible=False, enable_events=True, key="-SHOW_MARKERS-"
                             )
                         )
                     ],
                     [sg.HorizontalSeparator()],
+                    [sg.Text("Mob position Match Threshold:")],
+                    [
+                        sg.Slider(
+                            (0.1, 0.9),
+                            0.9,
+                            0.05,
+                            enable_events=True,
+                            orientation="h",
+                            size=(20, 15),
+                            key="-SIGNAL_MATCH_THRESHOLD-",
+                        )
+                    ],
                     [sg.Text("Healing Interval (ms):")],
                     [
                         sg.InputText("10", size=(10, 1), enable_events=True, key="-HEALING_INTERVAL_MS-"),
@@ -240,7 +259,7 @@ class Gui:
                 bot_status,
             ],
             pad=(0, 0),
-            size=(300, 450),
+            size=(300, 500),
             scrollable=True,
             vertical_scroll_only=True,
             expand_y=True,
