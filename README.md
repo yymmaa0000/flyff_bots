@@ -5,6 +5,7 @@
   <p align="center">
 	This is a project I built on top of the original forked FlyFF vision bot. I have made the bot compatible with Flyff Universe.
 	Please get familiar with the original project first before reaading the rest.
+	Addionally, inspired by the original project, I also created a healing bot.
 	<br />
 	:warning: Windows only :warning:
     <br />
@@ -18,7 +19,7 @@
 
 <img src="foreground_vision_bot/docs/newUI.png" alt="Flyff bot">
 
-This project made the following improvement on the  Foreground Vision Bot to make it work with Flyff Universe. 
+This project made the following improvement on the Foreground Vision Bot to make it work with Flyff Universe. 
 * Added a heal bot that automatically heals the player when the HP drops below 60%.
 * Added prioritized handeling of red named mobs.
 * Improved the mob selection algorithm to prioritize selecting mobs closeby in the actual 3D space.
@@ -70,3 +71,30 @@ https://tesseract-ocr.github.io/tessdoc/Installation.html
 To access tesseract-OCR from any location, you may have to add the directory where the tesseract-OCR binaries are located to the Path variables, maybe something like C:\Program Files\Tesseract-OCR.
 
 To do that, refer to here: https://www.geeksforgeeks.org/how-to-set-up-command-prompt-for-python-in-windows10/
+
+## Foreground Vision Healer
+
+<img src="foreground_vision_healer/docs/1.png" alt="Flyff healer">
+
+This is a healer bot build based on the Foreground Vision Bot that works with Flyff Universe. Players can have a healer character open on one PC with the healing bot being active. 
+The player can then controll another tank character on another PC. By typing a word in the chat like "begin" using the tank character, the healer character will detect this word using computer vision 
+and start healing the tank. Then, by typing another word like "end" using the tank, the healer will stop healing.
+
+This healing bot will help players to do aoe farming and receive healing while only controlling the tank character.
+
+### Game Setup Requirement
+Record a screenshot of the word you are going to use to start and stop the healing. Name them start.png and stop.png respectively and save them in foreground_vision_healer/assets/General
+
+Make sure to include part of the chat window bottom buttons in your screen shot.
+
+<img src="foreground_vision_healer/docs/start.png" alt="Flyff healer">
+<img src="foreground_vision_healer/docs/stop.png" alt="Flyff healer">
+
+You also need to setup your healer character as follows:
+
+* Put the healing skill on keyboard "3".
+* Target and follow your tank character.
+* Put your chat window on the bottom left side of your screen. 
+* Setup your chat window to only display general messages.
+<img src="foreground_vision_healer/docs/2.png" alt="Flyff healer">
+
