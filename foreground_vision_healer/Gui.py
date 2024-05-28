@@ -220,7 +220,7 @@ class Gui:
                         )
                     ],
                     [sg.HorizontalSeparator()],
-                    [sg.Text("Mob position Match Threshold:")],
+                    [sg.Text("Signal Match Threshold:")],
                     [
                         sg.Slider(
                             (0.1, 0.9),
